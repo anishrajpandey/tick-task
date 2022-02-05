@@ -4,3 +4,28 @@ main.todoMain {
 main.todoMain > .todoList ul li {
   list-style: none;
 }
+#mark {
+  transform: rotate(30deg);
+  opacity: 0;
+  transform-origin: center;
+}
+#mark:hover {
+  animation: markanimation 100ms linear forwards;
+}
+#round:hover {
+  animation: circle 1s linear;
+}
+@keyframes circle {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes markanimation {
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
