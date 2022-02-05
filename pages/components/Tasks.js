@@ -33,7 +33,7 @@ export default function Tasks() {
             <button
               onClick={(e) => {
                 TaskList.push(Task);
-                setTask("ansuh");
+                setTask("ansih");
                 Inputref.current.value = "";
               }}
             >
