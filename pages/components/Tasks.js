@@ -21,13 +21,13 @@ export default function Tasks() {
 
   //   AddButton.current.click();
   // }, [TaskList]);
-  useCallback(() => {
+  useEffect(() => {
     document.addEventListener("keypress", (e) => {
-      if (e.key == "Enter") {
-        document.querySelector("#AddButton").click();
+      if (e.key == "Enter" && Inputref.current.value != "") {
+        document.querySelector("#addButton").click();
       }
     });
-  }, [TaskList]);
+  }, []);
 
   return (
     <>
@@ -47,7 +47,7 @@ export default function Tasks() {
               }}
             />
             <button
-              id={style.AddButton}
+              id="addButton"
               ref={AddButton}
               onClick={(e) => {
                 TaskList.push(Task);
