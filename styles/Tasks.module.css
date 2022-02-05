@@ -8,7 +8,9 @@ main.todoMain > .todoList ul li {
   transform: rotate(30deg);
   opacity: 0;
   transform-origin: center;
+  display: block;
 }
+
 #mark:hover {
   animation: markanimation 100ms linear forwards;
 }
@@ -28,4 +30,9 @@ main.todoMain > .todoList ul li {
     transform: rotate(0);
     opacity: 1;
   }
+}
+div.checkBox {
+  /* background-color: red; */
+  display: inline-block;
+  /* width: 30px; */
 }

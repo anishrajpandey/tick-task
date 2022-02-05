@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import NavBar from "./NavBar";
 import style from "../../styles/Tasks.module.css";
 import Image from "next/image";
@@ -6,15 +6,28 @@ import checkmark from "../../public/checkmark.svg";
 
 export default function Tasks() {
   let Inputref = useRef();
+  let AddButton = useRef();
   let l = 0;
   const [Task, setTask] = useState("");
   const [TaskList, setTaskList] = useState([""]);
   const [Done, setDone] = useState([]);
   const [Clicked, setClicked] = useState(false);
   let initial = 0;
-  useEffect(() => {
-    setDone(Done);
-  }, [Done]);
+  // useEffect(() => {
+  //   setDone(Done);
+  // }, [Done]);
+  // useCallback(() => {
+  //   console.log(AddButton.current);
+
+  //   AddButton.current.click();
+  // }, [TaskList]);
+  useCallback(() => {
+    document.addEventListener("keypress", (e) => {
+      if (e.key == "Enter") {
+        document.querySelector("#AddButton").click();
+      }
+    });
+  }, [TaskList]);
 
   return (
     <>
@@ -34,9 +47,11 @@ export default function Tasks() {
               }}
             />
             <button
+              id={style.AddButton}
+              ref={AddButton}
               onClick={(e) => {
                 TaskList.push(Task);
-                setTask("ansih");
+                setTask("anish");
                 Inputref.current.value = "";
               }}
             >
@@ -53,17 +68,19 @@ export default function Tasks() {
                   {e.note}
 
                   {l > 1 ? (
-                    <button
+                    <input
+                      type="checkbox"
                       onClick={(e) => {
                         Done.push(e.target.parentElement.textContent);
-                        setDone(Done);
-                        console.log(Done);
+                        e.target.parentElement.style.textDecoration =
+                          "line-through";
 
-                        e.target.parentElement.style.display = "none";
+                        setTimeout(() => {
+                          e.target.parentElement.style.display = "none";
+                          setClicked(!Clicked);
+                        }, 2000);
                       }}
-                    >
-                      Delete
-                    </button>
+                    />
                   ) : null}
                 </li>
               );
@@ -72,6 +89,7 @@ export default function Tasks() {
         </div>
         <div className={style.doneList}>
           <ol>
+            <h3>Done Items</h3>
             {Done.map((e) => {
               return <li>{e}</li>;
             })}
@@ -89,36 +107,35 @@ export default function Tasks() {
       >
         <button
           onClick={(e) => {
-            setTimeout(() => {
-              // e.target.parentElement.style.display = "none";
-              e.target.parentElement.style.backgroundColor = "violet";
-            }, 2000);
+            e.target.parentElement.style.display = "none";
           }}
         >
           Delete
         </button>
-        <button onClick={() => setClicked(!Clicked)}>gen</button>
+        {/* <button onClick={() => setClicked(!Clicked)}>gen</button> */}
       </div>
-      <svg
-        width="347"
-        height="347"
-        viewBox="0 0 347 347"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g id="icons8-check-circle (1) 1">
-          <path
-            id={style.round}
-            d="M289.528 146.391C291.697 155.066 292.781 163.741 292.781 173.5C292.781 239.647 239.647 292.781 173.5 292.781C107.353 292.781 54.2188 239.647 54.2188 173.5C54.2188 107.353 107.353 54.2188 173.5 54.2188C206.031 54.2188 234.225 67.2313 255.913 87.8344L271.094 72.6531C246.153 47.7125 211.453 32.5312 173.5 32.5312C95.425 32.5312 32.5312 95.425 32.5312 173.5C32.5312 251.575 95.425 314.469 173.5 314.469C251.575 314.469 314.469 251.575 314.469 173.5C314.469 158.319 312.3 143.137 306.878 129.041L289.528 146.391Z"
-            fill="black"
-          />
-          <path
-            id={style.mark}
-            d="M173.5 235.309L111.691 173.5L126.872 157.234L173.5 203.862L296.034 81.3281L311.216 97.5938L173.5 235.309Z"
-            fill="#1C6516"
-          />
-        </g>
-      </svg>
+      <div className={style.checkBox}>
+        <svg
+          width="347"
+          height="347"
+          viewBox="0 0 347 347"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="icons8-check-circle (1) 1">
+            <path
+              id={style.round}
+              d="M289.528 146.391C291.697 155.066 292.781 163.741 292.781 173.5C292.781 239.647 239.647 292.781 173.5 292.781C107.353 292.781 54.2188 239.647 54.2188 173.5C54.2188 107.353 107.353 54.2188 173.5 54.2188C206.031 54.2188 234.225 67.2313 255.913 87.8344L271.094 72.6531C246.153 47.7125 211.453 32.5312 173.5 32.5312C95.425 32.5312 32.5312 95.425 32.5312 173.5C32.5312 251.575 95.425 314.469 173.5 314.469C251.575 314.469 314.469 251.575 314.469 173.5C314.469 158.319 312.3 143.137 306.878 129.041L289.528 146.391Z"
+              fill="black"
+            />
+            <path
+              id={style.mark}
+              d="M173.5 235.309L111.691 173.5L126.872 157.234L173.5 203.862L296.034 81.3281L311.216 97.5938L173.5 235.309Z"
+              fill="#1C6516"
+            />
+          </g>
+        </svg>
+      </div>
     </>
   );
 }
