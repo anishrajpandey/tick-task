@@ -1,0 +1,51 @@
+nav.navbar {
+  width: 100vw;
+  background-color: var(--clr-primary);
+  height: 75px;
+}
+.navItems {
+  display: flex;
+  flex-direction: row;
+  font-family: var(--font-main);
+  color: white;
+  align-items: center;
+  height: 100%;
+  padding: 0 36px;
+}
+.logoContainer {
+  flex: 2;
+}
+.logoContainer span {
+  font-size: 1.7rem;
+  font-weight: bold;
+  font-family: "Quicksand", sans-serif;
+}
+.itemContainer {
+  font-size: 1.1rem;
+
+  flex: 4;
+}
+.itemContainer ul {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+}
+.itemContainer ul li {
+  list-style: none;
+}
+.signContainer button {
+  width: 140px;
+  height: 40px;
+  background-color: #dbd3d3;
+  float: right;
+  border-radius: 5px;
+  border: 0;
+  font-family: var(--font-main);
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.signContainer {
+  flex: 1;
+}
+@media screen and (max-width: 1000px) {
+}

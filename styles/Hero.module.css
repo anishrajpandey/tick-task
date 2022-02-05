@@ -1,0 +1,77 @@
+section#mainhero {
+  height: calc(100vh - 75px);
+  width: 100vw;
+
+  display: flex;
+  flex-direction: row;
+  padding: 0px 40px;
+}
+.left {
+  flex: 0.5;
+  background-color: rgb(255, 255, 255);
+  padding: 120px 70px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: space-around;
+
+  /* background-color: teal; */
+}
+.left h1 {
+  font-family: "Quicksand";
+  font-size: 5.2rem;
+  font-weight: 900;
+  line-height: 1.1;
+  display: inline;
+  margin: 0px;
+}
+.left h1 span {
+  position: relative;
+}
+
+.left h1 span::before {
+  content: "";
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: 5px;
+  border-radius: 22px;
+  background-color: var(--clr-primary);
+}
+.left p {
+  width: auto;
+  color: #555a65;
+}
+.left button {
+  width: 180px;
+  color: var(--page-color);
+  height: 55px;
+  background-color: var(--clr-primary);
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.left button:hover {
+  border: 2px solid var(--clr-primary);
+  background-color: var(--page-color);
+  color: var(--clr-primary);
+}
+.right {
+  flex: 0.5;
+  padding: 30px 70px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.right Image {
+  object-fit: cover;
+}
+@media screen and (max-width: 1050px) {
+  section#mainhero * {
+    padding: 0 !important;
+  }
+}

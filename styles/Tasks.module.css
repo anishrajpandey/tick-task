@@ -1,0 +1,6 @@
+main.todoMain {
+  background-color: aquamarine;
+}
+main.todoMain > .todoList ul li {
+  list-style: none;
+}
