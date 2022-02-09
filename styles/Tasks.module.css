@@ -1,38 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
+h1.aligncenter {
+  text-align: center;
+
+  margin: 0;
+  margin-right: 16px;
+}
 main.todoMain {
-  background-color: aquamarine;
+  background-color: var(--page-color);
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10rem;
+  max-height: calc(100vh - 75px);
+  flex-wrap: wrap;
+  overflow-x: hidden;
 }
-main.todoMain > .todoList ul li {
+main.todoMain > .todoList li,
+main.todoMain > .doneList li {
+  background-color: var(--page-color);
   list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 26px;
+  font-weight: 500;
+  margin: 4px 0;
+  border-radius: 4px;
+  margin-bottom: 0.6rem;
+  width: 35rem;
 }
-#mark {
-  transform: rotate(30deg);
-  opacity: 0;
-  transform-origin: center;
-  display: block;
+main.todoMain > .todoList,
+main.todoMain > .doneList {
+  box-shadow: 2px 2px rgba(0 0 0/0.2);
+  min-height: calc(100vh - 100px);
+}
+main.todoMain > .todoList li {
+  background: rgba(36, 3, 0, 0.057);
+  font-weight: 500;
+  box-shadow: 0 2px rgba(0 0 0/0.2);
+}
+main.todoMain > .doneList li {
+  color: rgba(0 0 0/0.76);
+  box-shadow: 0 2px rgba(0 0 0/0.2);
+  display: flex;
+  align-items: center;
+}
+main.todoMain > .doneList {
+  position: relative;
+}
+main.todoMain > .doneList ol {
+  overflow-x: hidden;
 }
 
-#mark:hover {
-  animation: markanimation 100ms linear forwards;
+.input[type="checkbox"] {
+  width: 30px;
+  height: 30px;
+  accent-color: rgb(14, 255, 14);
+  clip-path: circle(44% at 50% 50%);
+  position: relative;
+  cursor: pointer;
 }
-#round:hover {
-  animation: circle 1s linear;
+
+main.todoMain > .todoList label input {
+  width: 350px;
+  height: 50px;
+  padding: 10px;
+  background-color: rgb(236, 239, 240);
+  border: 2px solid #000;
+  border-radius: 32px;
+  font-size: 15px;
 }
-@keyframes circle {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+main.todoMain > .todoList button {
+  display: none;
 }
-@keyframes markanimation {
-  to {
-    transform: rotate(0);
-    opacity: 1;
-  }
+main.todoMain > .todoList ul,
+main.todoMain > .doneList ol {
+  padding: 0;
+  max-height: 75vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
-div.checkBox {
-  /* background-color: red; */
+main.todoMain > .todoList ul::-webkit-scrollbar,
+main.todoMain > .doneList ol::-webkit-scrollbar {
+  width: 10px;
+}
+main.todoMain > .todoList ul::-webkit-scrollbar-thumb,
+main.todoMain > .doneList ol::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 22px;
+}
+main.todoMain > .todoList ul::-webkit-scrollbar-thumb:hover,
+main.todoMain > .doneList ol::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(84, 84, 85);
+}
+span.checkboxspan {
+  border-radius: 50%;
+  width: 37px;
+  height: 37px;
+  display: grid;
+  place-items: center;
+  transform: scale(0.89);
+  position: relative;
+  z-index: 0;
+  cursor: pointer;
+  margin-right: 0.4em;
+}
+.todoList .topHead {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+main.todoMain > .doneList ol li img {
+  box-sizing: content-box;
+  width: 20px !important;
+  padding-top: 3px !important;
+  padding-right: 5px !important;
+}
+main.todoMain > .doneList {
+  width: 35rem;
+
+  padding: 15px 0;
+}
+div.defaultText {
+  display: grid;
+  place-items: center;
+  font-size: 4em;
+  font-weight: 600;
+  font-family: "Dancing Script", cursive;
+  height: 75vh;
+  max-width: 100%;
+  color: rgba(0, 3, 0, 0.57);
+}
+main.todoMain > .doneList ol button.deleteBtn {
+  width: 200px;
+  height: 40px;
+  text-align: center;
+  font-size: medium;
+  font-weight: 600;
+  background-color: rgb(245, 80, 80);
+  border: 0;
+  border-radius: 3px;
+  margin: auto;
+  cursor: pointer;
+  transition: background-color 100ms linear;
+}
+main.todoMain > .doneList ol button.deleteBtn:hover {
+  background-color: red;
+}
+#delLogo {
+  margin-right: 7px;
+}
+main.todoMain > .doneList > .progress {
+  position: absolute;
+  top: 0;
+  right: -490px;
+  /* right: 150px; */
+  transition: 100ms;
+  background: rgb(32, 31, 31);
+  width: 20rem;
+  display: flex;
+  user-select: none;
+  height: auto;
+  flex-direction: column;
+  box-shadow: 5px 10px 10px rgba(0 0 0/0.9);
+  border-radius: 12px;
+  padding: 10px;
+  /* display: none; */
+}
+
+input[type="range"].progressbar {
+  accent-color: var(--accent);
+  width: 200px;
+  align-self: center;
+
+  transform: scale(1.4);
+}
+input[type="range"].progressbar::after {
+  content: var(--progressPercent);
+}
+main.todoMain > .doneList > .progress h3 > span {
+  font-weight: bolder;
+  font-size: 20px !important;
+  color: var(--accent);
+}
+main.todoMain > .doneList > .progress :is(h1, h3) {
+  color: white;
+  margin-left: 2rem;
+}
+main.todoMain > .doneList > .Prg_btn {
   display: inline-block;
-  /* width: 30px; */
+
+  width: 4rem;
+  /* background-color: #009; */
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  cursor: pointer;
+  pointer-events: all;
 }
+#opt {
+  color: black;
+  font-size: 2.5rem;
+  /* pointer-events: none; */
+}
+/* main.todoMain > .doneList > .Prg_btn::before {
+  content: "\f0ae";
+  position: absolute;
+} */
