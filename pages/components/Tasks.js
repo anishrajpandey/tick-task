@@ -1,34 +1,63 @@
-import { useRef, useState, useEffect, useCallback, useMemo } from "react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import NavBar from "./NavBar";
 import style from "../../styles/Tasks.module.css";
 import Image from "next/image";
 import checkMark from "../../public/checkmark.svg";
 import Script from "next/script";
+import axios from "axios";
 export default function Tasks() {
   let Inputref = useRef();
   let AddButton = useRef();
   let l = 0;
+  let index;
+  let TaskStr;
   let initial = 0;
   const [Task, setTask] = useState("");
-  const [TaskList, setTaskList] = useState([""]);
+  const [TaskList, setTaskList] = useState([]);
   const [Done, setDone] = useState([]);
   const [Clicked, setClicked] = useState(false);
-  const [TodolistLength, setTodolistLength] = useState(TaskList.length - 1);
   const [SpanColor, setSpanColor] = useState("black");
   const [ProgressColor, setProgressColor] = useState("red");
-  const [ProgressPercent, setProgressPercent] = useState(
-    Math.ceil((Done.length / (Done.length + TodolistLength)) * 100)
-  );
-  const [ShowMenu, setShowMenu] = useState(true);
 
+  const [ShowMenu, setShowMenu] = useState(true);
+  const [Quote, setQuote] = useState({
+    text: "Things do not change, we change.",
+    author: "Henry Thoreau",
+  });
+  const getRandomIndex = () => {
+    let randomNum = Math.floor(Math.random() * 1643);
+    return randomNum;
+  };
+  const getData = async () => {
+    const res = await axios.get("https://type.fit/api/quotes ", {
+      headers: { Accept: "application/json" },
+      type: "GET",
+
+      crossDomain: true,
+    });
+    setQuote(res.data[getRandomIndex()]);
+  };
   useEffect(() => {
     document.addEventListener("keypress", (e) => {
       if (e.key == "Enter" && Inputref.current.value != "") {
         document.querySelector("#addButton").click();
       }
     });
+
+    setInterval(() => getData(), 15000);
   }, []);
+  useLayoutEffect(() => {
+    setTaskList(localStorage.getItem("tasks").split(","));
+
+    console.log(TaskList.length, TaskList);
+  }, []);
+  const [TodolistLength, setTodolistLength] = useState(TaskList.length);
+  const [ProgressPercent, setProgressPercent] = useState(
+    Math.ceil((Done.length / (Done.length + TodolistLength)) * 100)
+  );
   useEffect(() => {
+    localStorage.setItem("tasks", TaskList.toString());
+
     setProgressPercent(
       Math.ceil((Done.length / (Done.length + TodolistLength)) * 100)
     );
@@ -51,6 +80,7 @@ export default function Tasks() {
       document.documentElement.style.setProperty("--accent", "green");
     }
   });
+
   return (
     <>
       <Script
@@ -70,9 +100,7 @@ export default function Tasks() {
                 ref={Inputref}
                 className={style.inputTodo}
                 onChange={(e) => {
-                  setTask({
-                    note: e.target.value,
-                  });
+                  setTask(e.target.value);
                 }}
               />
               <button
@@ -84,8 +112,11 @@ export default function Tasks() {
                     setTask("anish");
                     Inputref.current.value = "";
                     TaskList.length == 0
-                      ? setTodolistLength(TaskList.length - 1)
-                      : setTodolistLength(TodolistLength + 1);
+                      ? setTodolistLength(TaskList.length)
+                      : setTodolistLength(TaskList.length);
+                  }
+                  if (TaskList[0] === "") {
+                    TaskList.shift;
                   }
                 }}
               >
@@ -113,8 +144,8 @@ export default function Tasks() {
                     y2="42.032"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop offset="0" stop-color="#21ad64" />
-                    <stop offset="1" stop-color="#088242" />
+                    <stop offset="0" stopColor="#21ad64" />
+                    <stop offset="1" stopColor="#088242" />
                   </linearGradient>
                   <path
                     fill="url(#wi9reJZsYu2bf~DD3zafra)"
@@ -184,22 +215,34 @@ export default function Tasks() {
                             "line-through";
                           e.target.parentElement.style.backgroundColor =
                             "rgb(14, 255, 14)";
-                          setTodolistLength(TodolistLength - 1);
+
+                          setTodolistLength(TaskList.length);
                           e.target.style.pointerEvents = "none";
+                          TaskStr =
+                            e.target.parentElement.parentElement.textContent;
+                          index = TaskList.indexOf(TaskStr);
+                          // console.log(TaskStr, index);
 
                           setTimeout(() => {
-                            e.target.parentElement.parentElement.style.display =
+                            console.log(TaskList.splice(index, 1));
+                            // e.target.parentElement.parentElement.style.display =
+                            //   "none";
+                            e.target.checked = false;
+                            e.target.style.pointerEvents = "all";
+
+                            e.target.parentElement.style.backgroundColor =
+                              "black";
+                            e.target.parentElement.parentElement.style.textDecoration =
                               "none";
 
                             setClicked(!Clicked);
-                            e.target.parentElement.style.backgroundColor =
-                              "rgb(14, 255, 14)";
-                          }, 1000);
+                          }, 500);
                         }}
                       />
+                      {console.log(TaskList.length, TaskList)}
                     </span>
                   ) : null}
-                  {e.note}
+                  {e}
                 </li>
               );
             })}
@@ -233,14 +276,11 @@ export default function Tasks() {
           <div
             className={style.Prg_btn}
             onClick={(e) => {
-              // console.log(
-              //   e.target.parentElement.parentElement.children[3].style.right
-              // );
               ShowMenu
-                ? (e.target.parentElement.parentElement.children[3].style.right =
-                    "150px")
-                : (e.target.parentElement.parentElement.children[3].style.right =
-                    "-480px");
+                ? (e.target.parentElement.parentElement.children[3].style.top =
+                    "0%")
+                : (e.target.parentElement.parentElement.children[3].style.top =
+                    "110%");
               setShowMenu(!ShowMenu);
             }}
           >
@@ -252,25 +292,29 @@ export default function Tasks() {
           <div className={style.progress} id={style.prg1}>
             <h1 className={style.aligncenter}>Progress Bar</h1>
             <h3>
-              To-Do:<span> {TodolistLength}</span>
+              To-Do:<span> &nbsp;&nbsp;{TodolistLength}</span>
             </h3>
             <h3>
-              Done: <span>{Done.length}</span>
+              Done: <span>&nbsp;&nbsp;{Done.length}</span>
             </h3>
             <h3>
-              Progress:<span>{ProgressPercent}%</span>
+              Progress:<span>&nbsp;&nbsp;{ProgressPercent || 0}%</span>
             </h3>
             <input
               type="range"
               min="0"
               max="100"
-              value={ProgressPercent}
+              value={ProgressPercent || 0}
               class={style.progressbar}
             />
-            {/* {console.log(ProgressPercent)} */}
+            <div className={style.quoteContainer}>
+              <strong>{Quote.text}</strong>
+              <em>-{Quote.author}</em>
+            </div>
           </div>
         </div>
       </main>
     </>
   );
 }
+async function waitAndDo() {}

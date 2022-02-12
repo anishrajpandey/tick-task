@@ -11,8 +11,8 @@ main.todoMain {
   justify-content: space-between;
   padding: 5px 10rem;
   max-height: calc(100vh - 75px);
-  flex-wrap: wrap;
-  overflow-x: hidden;
+  /* flex-wrap: wrap; */
+  overflow: hidden;
 }
 main.todoMain > .todoList li,
 main.todoMain > .doneList li {
@@ -75,6 +75,7 @@ main.todoMain > .todoList button {
 main.todoMain > .todoList ul,
 main.todoMain > .doneList ol {
   padding: 0;
+  margin: 0;
   max-height: 75vh;
   overflow-y: scroll;
   display: flex;
@@ -144,7 +145,11 @@ main.todoMain > .doneList ol button.deleteBtn {
   margin: auto;
   cursor: pointer;
   transition: background-color 100ms linear;
+  position: absolute;
+  bottom: 0;
+  right: 35%;
 }
+
 main.todoMain > .doneList ol button.deleteBtn:hover {
   background-color: red;
 }
@@ -153,12 +158,14 @@ main.todoMain > .doneList ol button.deleteBtn:hover {
 }
 main.todoMain > .doneList > .progress {
   position: absolute;
-  top: 0;
-  right: -490px;
-  /* right: 150px; */
+  /* top: 0; */
+  /* right: -490px; */
+  inset: 0;
+  top: 110%;
   transition: 100ms;
   background: rgb(32, 31, 31);
-  width: 20rem;
+  width: 80%;
+  height: 100%;
   display: flex;
   user-select: none;
   height: auto;
@@ -181,8 +188,9 @@ input[type="range"].progressbar::after {
 }
 main.todoMain > .doneList > .progress h3 > span {
   font-weight: bolder;
-  font-size: 20px !important;
+  font-size: 30px !important;
   color: var(--accent);
+  font-weight: 900;
 }
 main.todoMain > .doneList > .progress :is(h1, h3) {
   color: white;
@@ -192,7 +200,6 @@ main.todoMain > .doneList > .Prg_btn {
   display: inline-block;
 
   width: 4rem;
-  /* background-color: #009; */
   position: absolute;
   right: 1rem;
   top: 1rem;
@@ -202,9 +209,20 @@ main.todoMain > .doneList > .Prg_btn {
 #opt {
   color: black;
   font-size: 2.5rem;
-  /* pointer-events: none; */
 }
-/* main.todoMain > .doneList > .Prg_btn::before {
-  content: "\f0ae";
-  position: absolute;
-} */
+main.todoMain > .doneList > .progress .quoteContainer {
+  color: var(--accent, white);
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  height: 10rem;
+  width: 90%;
+  margin: auto;
+}
+main.todoMain > .doneList > .progress .quoteContainer > * {
+  display: block;
+}
+main.todoMain > .doneList > .progress .quoteContainer :nth-child(2) {
+  align-self: flex-end;
+  margin-right: 12px;
+}
