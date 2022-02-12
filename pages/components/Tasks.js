@@ -48,6 +48,13 @@ export default function Tasks() {
   }, []);
   useLayoutEffect(() => {
     setTaskList(localStorage.getItem("tasks").split(","));
+    setDone(localStorage.getItem("donetasks").split(","));
+    console.log(
+      localStorage.getItem("donetasks"),
+      typeof localStorage.getItem("donetasks")
+    );
+
+    setTodolistLength(TaskList.length);
 
     console.log(TaskList.length, TaskList);
   }, []);
@@ -56,7 +63,10 @@ export default function Tasks() {
     Math.ceil((Done.length / (Done.length + TodolistLength)) * 100)
   );
   useEffect(() => {
+    setTodolistLength(TaskList.length);
+
     localStorage.setItem("tasks", TaskList.toString());
+    localStorage.setItem("donetasks", Done.toString());
 
     setProgressPercent(
       Math.ceil((Done.length / (Done.length + TodolistLength)) * 100)
@@ -111,12 +121,10 @@ export default function Tasks() {
                     TaskList.push(Task);
                     setTask("anish");
                     Inputref.current.value = "";
-                    TaskList.length == 0
-                      ? setTodolistLength(TaskList.length)
-                      : setTodolistLength(TaskList.length);
+                    setTodolistLength(TaskList.length);
                   }
                   if (TaskList[0] === "") {
-                    TaskList.shift;
+                    TaskList.shift();
                   }
                 }}
               >
@@ -194,54 +202,51 @@ export default function Tasks() {
               </div>
             )}
             {TaskList.map((e) => {
-              {
-                l++;
-              }
+              TaskList[0] === "" ? TaskList.shift() : null;
               return (
                 <li>
-                  {l > 1 ? (
-                    <span
-                      className={style.checkboxspan}
-                      style={{ backgroundColor: SpanColor }}
-                    >
-                      <input
-                        className={style.input}
-                        type="checkbox"
-                        onClick={(e) => {
-                          Done.push(
-                            e.target.parentElement.parentElement.textContent
-                          );
-                          e.target.parentElement.parentElement.style.textDecoration =
-                            "line-through";
+                  <span
+                    className={style.checkboxspan}
+                    style={{ backgroundColor: SpanColor }}
+                  >
+                    <input
+                      className={style.input}
+                      type="checkbox"
+                      onClick={(e) => {
+                        Done.push(
+                          e.target.parentElement.parentElement.textContent
+                        );
+                        e.target.parentElement.parentElement.style.textDecoration =
+                          "line-through";
+                        e.target.parentElement.style.backgroundColor =
+                          "rgb(14, 255, 14)";
+
+                        setTodolistLength(TaskList.length);
+                        e.target.style.pointerEvents = "none";
+                        TaskStr =
+                          e.target.parentElement.parentElement.textContent;
+                        index = TaskList.indexOf(TaskStr);
+                        // console.log(TaskStr, index);
+
+                        setTimeout(() => {
+                          console.log(TaskList.splice(index, 1));
+                          // e.target.parentElement.parentElement.style.display =
+                          //   "none";
+                          e.target.checked = false;
+                          e.target.style.pointerEvents = "all";
+
                           e.target.parentElement.style.backgroundColor =
-                            "rgb(14, 255, 14)";
+                            "black";
+                          e.target.parentElement.parentElement.style.textDecoration =
+                            "none";
 
-                          setTodolistLength(TaskList.length);
-                          e.target.style.pointerEvents = "none";
-                          TaskStr =
-                            e.target.parentElement.parentElement.textContent;
-                          index = TaskList.indexOf(TaskStr);
-                          // console.log(TaskStr, index);
+                          setClicked(!Clicked);
+                        }, 500);
+                      }}
+                    />
+                    {console.log(TaskList.length, TaskList)}
+                  </span>
 
-                          setTimeout(() => {
-                            console.log(TaskList.splice(index, 1));
-                            // e.target.parentElement.parentElement.style.display =
-                            //   "none";
-                            e.target.checked = false;
-                            e.target.style.pointerEvents = "all";
-
-                            e.target.parentElement.style.backgroundColor =
-                              "black";
-                            e.target.parentElement.parentElement.style.textDecoration =
-                              "none";
-
-                            setClicked(!Clicked);
-                          }, 500);
-                        }}
-                      />
-                      {console.log(TaskList.length, TaskList)}
-                    </span>
-                  ) : null}
                   {e}
                 </li>
               );
@@ -249,15 +254,17 @@ export default function Tasks() {
           </ul>
         </div>
 
-        {/* ******************************************************* */}
+        {/* ************************Done items list******************************* */}
         <div className={style.doneList}>
           <h1 className={style.aligncenter}>Done({Done.length})</h1>
           <ol>
-            {Done.map((e) => {
+            {Done.map((e, index) => {
+              Done[0] === "" ? Done.shift() : null;
+
               return (
                 <li>
-                  <Image src={checkMark} className={style.checkedImg}></Image>
-                  {e}
+                  {/* <Image src={checkMark} className={style.checkedImg}></Image> */}
+                  {`${index + 1}.✅${e}`}
                 </li>
               );
             })}
