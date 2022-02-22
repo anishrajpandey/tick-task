@@ -39,7 +39,7 @@ export default function Tasks() {
   };
   useEffect(() => {
     document.addEventListener("keypress", (e) => {
-      if (e.key == "Enter" && Inputref.current.value != "") {
+      if (e.key == "Enter" && Inputref.current?.value != "") {
         document.querySelector("#addButton").click();
       }
     });

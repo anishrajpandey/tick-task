@@ -1,10 +1,10 @@
 section#mainhero {
   height: calc(100vh - 75px);
-  width: 100vw;
+  /* width: 100vw; */
 
   display: flex;
   flex-direction: row;
-  padding: 0px 40px;
+  /* padding: 0px 40px; */
 }
 .left {
   flex: 0.5;
@@ -12,10 +12,9 @@ section#mainhero {
   padding: 120px 70px;
   display: flex;
   flex-direction: column;
-  width: 50%;
+  max-width: 50%;
+  min-width: 200px;
   justify-content: space-around;
-
-  /* background-color: teal; */
 }
 .left h1 {
   font-family: "Quicksand";
@@ -66,6 +65,7 @@ section#mainhero {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 .right Image {
   object-fit: cover;
