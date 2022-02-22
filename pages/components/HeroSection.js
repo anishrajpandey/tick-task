@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "../../styles/Hero.module.css";
 import taskimg from "../../public/task.svg";
+import Link from "next/link";
 const HeroSection = () => {
   return (
     <>
@@ -17,9 +18,9 @@ const HeroSection = () => {
             mark as you finish. .jjd Lorem ipsum dolor sit amet consectetur
             adipisicing elit. Cum quae nostrum adipisci vel
           </p>
-          <a href="../components/Tasks">
+          <Link href="../components/Tasks">
             <button>Get Started</button>
-          </a>
+          </Link>
         </div>
         <div className={styles.right}>
           <Image src={taskimg}></Image>

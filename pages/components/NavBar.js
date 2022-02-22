@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import style from "../../styles/NavBar.module.css";
 
@@ -16,19 +17,19 @@ const NavBar = () => {
         <div className={style.navItems}>
           <div className={style.logoContainer}>
             <span>
-              <a href="../">myTasks</a>
+              <Link href="../">myTasks</Link>
             </span>
           </div>
           <div className={style.itemContainer}>
             <ul>
               <li>
-                <a href="../">Home</a>
+                <Link href="/">Home</Link>
               </li>
               <li>
-                <a href="../components/Tasks">Tasks</a>
+                <Link href="/components/Tasks">Tasks</Link>
               </li>
               <li>
-                <a href="../components/About">About</a>
+                <Link href="https://www.youtube.com">About</Link>
               </li>
             </ul>
           </div>
