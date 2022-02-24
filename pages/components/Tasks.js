@@ -1,8 +1,6 @@
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import NavBar from "./NavBar";
 import style from "../../styles/Tasks.module.css";
-import Image from "next/image";
-import checkMark from "../../public/checkmark.svg";
 import Script from "next/script";
 import axios from "axios";
 export default function Tasks() {
@@ -49,14 +47,8 @@ export default function Tasks() {
   useLayoutEffect(() => {
     setTaskList(localStorage.getItem("tasks").split(","));
     setDone(localStorage.getItem("donetasks").split(","));
-    console.log(
-      localStorage.getItem("donetasks"),
-      typeof localStorage.getItem("donetasks")
-    );
 
     setTodolistLength(TaskList.length);
-
-    console.log(TaskList.length, TaskList);
   }, []);
   const [TodolistLength, setTodolistLength] = useState(TaskList.length);
   const [ProgressPercent, setProgressPercent] = useState(
@@ -97,7 +89,7 @@ export default function Tasks() {
         src="https://kit.fontawesome.com/3d2f093b4a.js"
         strategy="lazyOnload"
       ></Script>
-      <NavBar />
+
       <main className={style.todoMain}>
         <div className={style.todoList}>
           <div className={style.topHead}>
@@ -175,8 +167,8 @@ export default function Tasks() {
                     y2="36.032"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop offset="0" stop-color="#9dffce" />
-                    <stop offset="1" stop-color="#50d18d" />
+                    <stop offset="0" stopColor="#9dffce" />
+                    <stop offset="1" stopColor="#50d18d" />
                   </linearGradient>
                   <path
                     fill="url(#wi9reJZsYu2bf~DD3zafrb)"
@@ -190,9 +182,9 @@ export default function Tasks() {
                     y2="20.793"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop offset=".824" stop-color="#135d36" />
-                    <stop offset=".931" stop-color="#125933" />
-                    <stop offset="1" stop-color="#11522f" />
+                    <stop offset=".824" stopColor="#135d36" />
+                    <stop offset=".931" stopColor="#125933" />
+                    <stop offset="1" stopColor="#11522f" />
                   </linearGradient>
                   <path
                     fill="url(#wi9reJZsYu2bf~DD3zafrc)"
@@ -226,12 +218,10 @@ export default function Tasks() {
                         TaskStr =
                           e.target.parentElement.parentElement.textContent;
                         index = TaskList.indexOf(TaskStr);
-                        // console.log(TaskStr, index);
 
                         setTimeout(() => {
-                          console.log(TaskList.splice(index, 1));
-                          // e.target.parentElement.parentElement.style.display =
-                          //   "none";
+                          TaskList.splice(index, 1);
+
                           e.target.checked = false;
                           e.target.style.pointerEvents = "all";
 
@@ -244,7 +234,6 @@ export default function Tasks() {
                         }, 500);
                       }}
                     />
-                    {console.log(TaskList.length, TaskList)}
                   </span>
 
                   {e}
@@ -261,12 +250,7 @@ export default function Tasks() {
             {Done.map((e, index) => {
               Done[0] === "" ? Done.shift() : null;
 
-              return (
-                <li>
-                  {/* <Image src={checkMark} className={style.checkedImg}></Image> */}
-                  {`${index + 1}.✅${e}`}
-                </li>
-              );
+              return <li>{`${index + 1}.✅${e}`}</li>;
             })}
             {Done.length !== 0 && (
               <button
@@ -324,4 +308,3 @@ export default function Tasks() {
     </>
   );
 }
-async function waitAndDo() {}

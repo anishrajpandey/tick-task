@@ -29,7 +29,7 @@ const NavBar = () => {
                 <Link href="/components/Tasks">Tasks</Link>
               </li>
               <li>
-                <Link href="https://www.youtube.com">About</Link>
+                <Link href="/components/About">About</Link>
               </li>
             </ul>
           </div>
