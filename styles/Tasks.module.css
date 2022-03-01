@@ -12,7 +12,9 @@ main.todoMain {
   justify-content: space-between;
   padding: 5px 10rem;
   max-height: calc(100vh - 75px);
-  overflow: hidden;
+  /* min-height: 100vh; */
+  /* overflow: hidden; */
+  /* background-color: #000; */
 }
 main.todoMain > .todoList li,
 main.todoMain > .doneList li {
@@ -31,7 +33,7 @@ main.todoMain > .doneList li {
 main.todoMain > .todoList,
 main.todoMain > .doneList {
   box-shadow: 2px 2px rgba(0 0 0/0.2);
-  /* min-height: calc(100vh - 100px); */
+  min-height: auto, calc(100vh - 100px);
 }
 main.todoMain > .todoList li {
   background: rgba(36, 3, 0, 0.057);
@@ -46,10 +48,13 @@ main.todoMain > .doneList li {
 }
 main.todoMain > .doneList {
   position: relative;
+  overflow: hidden;
 }
 main.todoMain > .doneList ol,
 main.todoMain > .todoList ul {
   overflow-x: hidden;
+  overflow-y: scroll;
+  height: 75vh;
 }
 
 .input[type="checkbox"] {
@@ -71,13 +76,21 @@ main.todoMain > .todoList label input {
   font-size: 15px;
 }
 main.todoMain > .todoList button {
+  width: 100%;
+  border: 0;
+  background: var(--clr-primary);
+  margin: 10px 5px;
+  border-radius: 2rem;
+  height: 50px;
+  font-size: 1.3rem;
+  font-weight: bold;
   display: none;
 }
 main.todoMain > .todoList ul,
 main.todoMain > .doneList ol {
   padding: 0;
   margin: 0;
-  max-height: 75vh;
+  /* max-height: 75vh; */
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -166,7 +179,8 @@ main.todoMain > .doneList > .progress {
   top: 110%;
   transition: 100ms;
   background: rgb(32, 31, 31);
-  width: 80%;
+  width: 100%;
+  z-index: 0;
   height: 100%;
   display: flex;
   user-select: none;
@@ -175,7 +189,7 @@ main.todoMain > .doneList > .progress {
   box-shadow: 5px 10px 10px rgba(0 0 0/0.9);
   border-radius: 12px;
   padding: 10px;
-  /* display: none; */
+  padding-top: 80px;
 }
 
 input[type="range"].progressbar {
@@ -190,7 +204,7 @@ input[type="range"].progressbar::after {
 }
 main.todoMain > .doneList > .progress h3 > span {
   font-weight: bolder;
-  font-size: 30px !important;
+  font-size: 30px;
   color: var(--accent);
   font-weight: 900;
 }
@@ -203,6 +217,7 @@ main.todoMain > .doneList > .Prg_btn {
 
   width: 4rem;
   position: absolute;
+  z-index: 4;
   right: 1rem;
   top: 1rem;
   cursor: pointer;
@@ -233,12 +248,20 @@ main.todoMain > .doneList > .progress .quoteContainer :nth-child(2) {
     padding: 1rem !important;
   }
 }
+@media screen and (max-width: 1350px) {
+  main.todoMain > .doneList > .progress .quoteContainer {
+    width: 20rem;
+  }
+}
 @media screen and (max-width: 1000px) {
   main.todoMain {
     flex-wrap: wrap;
     overflow: visible;
 
     min-height: fit-content;
+  }
+  main.todoMain > .todoList button {
+    display: block;
   }
 }
 @media screen and (max-width: 900px) {
@@ -258,5 +281,12 @@ main.todoMain > .doneList > .progress .quoteContainer :nth-child(2) {
   main.todoMain > .todoList,
   main.todoMain > .doneList {
     width: 100%;
+  }
+  main.todoMain > .todoList label input {
+    padding: 0;
+    width: 120%;
+
+    margin-right: 10px;
+    justify-self: flex-start;
   }
 }

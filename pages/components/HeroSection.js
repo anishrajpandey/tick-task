@@ -13,7 +13,9 @@ const HeroSection = () => {
           </h1>
           <p>
             Increase your productivity with a powerful task noting app. Note the
-            task and mark as you finish. .
+            task and mark as you finish. Lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Iste voluptates magni molestias. Necessitatibus
+            reprehenderit, hic maiores pariatur corporis mollitia in qui modi.
           </p>
           <Link href="../components/Tasks">
             <button>Get Started</button>

@@ -1,10 +1,9 @@
 section#mainhero {
   height: calc(100vh - 75px);
-  /* width: 100vw; */
-
+  justify-content: center;
   display: flex;
   flex-direction: row;
-  /* padding: 0px 40px; */
+  padding: 0px 40px;
 }
 .left {
   flex: 0.5;
@@ -72,6 +71,24 @@ section#mainhero {
 }
 @media screen and (max-width: 1050px) {
   section#mainhero * {
-    padding: 0 !important;
+    padding: 1rem 0 !important;
+  }
+  section#mainhero {
+    justify-content: center;
+    height: 70vh;
+  }
+  .left h1 {
+    font-size: 3rem;
+  }
+  .left {
+    flex: 1;
+    /* background-color: #555a65; */
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1050px) {
+  section#mainhero .right {
+    display: none;
+    justify-content: center;
   }
 }

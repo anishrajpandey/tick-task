@@ -47,8 +47,21 @@ nav.navbar {
 .signContainer {
   flex: 1;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1500px) {
   .signContainer button {
     display: none;
+  }
+}
+@media (max-width: 500px) {
+  .navItems {
+    padding: 0;
+  }
+  .navItems * {
+    flex: 1;
+  }
+}
+@media (max-width: 400px) {
+  .navItems {
+    flex-direction: column;
   }
 }

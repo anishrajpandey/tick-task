@@ -16,6 +16,7 @@ export default function Tasks() {
   const [Clicked, setClicked] = useState(false);
   const [SpanColor, setSpanColor] = useState("black");
   const [ProgressColor, setProgressColor] = useState("red");
+  
 
   const [ShowMenu, setShowMenu] = useState(true);
   const [Quote, setQuote] = useState({
@@ -267,11 +268,12 @@ export default function Tasks() {
           <div
             className={style.Prg_btn}
             onClick={(e) => {
+              e.target.style.filter = `invert(${!ShowMenu ? "0" : "1"})`;
               ShowMenu
-                ? (e.target.parentElement.parentElement.children[3].style.top =
-                    "0%")
-                : (e.target.parentElement.parentElement.children[3].style.top =
-                    "110%");
+                ? e.target.parentElement.parentElement.children[3]?.style.top =
+                  "0%"
+                : e.target.parentElement.parentElement.children[3]?.style.top =
+                  "110%";
               setShowMenu(!ShowMenu);
             }}
           >
