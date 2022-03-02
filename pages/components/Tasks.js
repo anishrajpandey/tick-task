@@ -16,7 +16,6 @@ export default function Tasks() {
   const [Clicked, setClicked] = useState(false);
   const [SpanColor, setSpanColor] = useState("black");
   const [ProgressColor, setProgressColor] = useState("red");
-  
 
   const [ShowMenu, setShowMenu] = useState(true);
   const [Quote, setQuote] = useState({
@@ -197,7 +196,7 @@ export default function Tasks() {
             {TaskList.map((e) => {
               TaskList[0] === "" ? TaskList.shift() : null;
               return (
-                <li>
+                <li key={todolist}>
                   <span
                     className={style.checkboxspan}
                     style={{ backgroundColor: SpanColor }}
@@ -251,7 +250,7 @@ export default function Tasks() {
             {Done.map((e, index) => {
               Done[0] === "" ? Done.shift() : null;
 
-              return <li>{`${index + 1}.✅${e}`}</li>;
+              return <li key={doneitems}>{`${index + 1}.✅${e}`}</li>;
             })}
             {Done.length !== 0 && (
               <button
@@ -260,7 +259,7 @@ export default function Tasks() {
                   setDone([]);
                 }}
               >
-                <i class="fas fa-trash" id={style.delLogo}></i>
+                <i className="fas fa-trash" id={style.delLogo}></i>
                 Delete Done Tasks
               </button>
             )}
@@ -269,11 +268,11 @@ export default function Tasks() {
             className={style.Prg_btn}
             onClick={(e) => {
               e.target.style.filter = `invert(${!ShowMenu ? "0" : "1"})`;
-              ShowMenu
-                ? e.target.parentElement.parentElement.children[3]?.style.top =
-                  "0%"
-                : e.target.parentElement.parentElement.children[3]?.style.top =
-                  "110%";
+              // ShowMenu
+              //   ? e.target.parentElement.parentElement.children[3]?.style.top =
+              //     "0%"
+              //   : e.target.parentElement.parentElement.children[3]?.style.top =
+              //     "110%";
               setShowMenu(!ShowMenu);
             }}
           >
@@ -298,7 +297,7 @@ export default function Tasks() {
               min="0"
               max="100"
               value={ProgressPercent || 0}
-              class={style.progressbar}
+              className={style.progressbar}
             />
             <div className={style.quoteContainer}>
               <strong>{Quote.text}</strong>
