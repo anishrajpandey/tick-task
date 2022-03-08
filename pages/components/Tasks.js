@@ -3,13 +3,14 @@ import NavBar from "./NavBar";
 import style from "../../styles/Tasks.module.css";
 import Script from "next/script";
 import axios from "axios";
+import { Router } from "next/router";
 export default function Tasks() {
   let Inputref = useRef();
   let AddButton = useRef();
   let l = 0;
   let index;
   let TaskStr;
-  let initial = 0;
+  let initial = "Some Key";
   const [Task, setTask] = useState("");
   const [TaskList, setTaskList] = useState([]);
   const [Done, setDone] = useState([]);
@@ -30,7 +31,6 @@ export default function Tasks() {
     const res = await axios.get("https://type.fit/api/quotes ", {
       headers: { Accept: "application/json" },
       type: "GET",
-
       crossDomain: true,
     });
     setQuote(res.data[getRandomIndex()]);
@@ -196,7 +196,7 @@ export default function Tasks() {
             {TaskList.map((e) => {
               TaskList[0] === "" ? TaskList.shift() : null;
               return (
-                <li key={todolist}>
+                <li key={initial}>
                   <span
                     className={style.checkboxspan}
                     style={{ backgroundColor: SpanColor }}
@@ -250,7 +250,7 @@ export default function Tasks() {
             {Done.map((e, index) => {
               Done[0] === "" ? Done.shift() : null;
 
-              return <li key={doneitems}>{`${index + 1}.✅${e}`}</li>;
+              return <li key={initial}>{`${index + 1}.✅${e}`}</li>;
             })}
             {Done.length !== 0 && (
               <button
@@ -268,11 +268,7 @@ export default function Tasks() {
             className={style.Prg_btn}
             onClick={(e) => {
               e.target.style.filter = `invert(${!ShowMenu ? "0" : "1"})`;
-              // ShowMenu
-              //   ? e.target.parentElement.parentElement.children[3]?.style.top =
-              //     "0%"
-              //   : e.target.parentElement.parentElement.children[3]?.style.top =
-              //     "110%";
+
               setShowMenu(!ShowMenu);
             }}
           >
@@ -281,7 +277,19 @@ export default function Tasks() {
               className={`${style.progressButton} fas fa-tasks`}
             ></i>
           </div>
-          <div className={style.progress} id={style.prg1}>
+          <div
+            className={style.progress}
+            style={
+              !ShowMenu
+                ? {
+                    top: "0%",
+                  }
+                : {
+                    top: "100%",
+                  }
+            }
+            id={style.prg1}
+          >
             <h1 className={style.aligncenter}>Progress Bar</h1>
             <h3>
               To-Do:<span> &nbsp;&nbsp;{TodolistLength}</span>
