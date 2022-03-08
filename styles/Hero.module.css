@@ -82,7 +82,6 @@ section#mainhero {
   }
   .left {
     flex: 1;
-    /* background-color: #555a65; */
     width: 100%;
   }
 }
