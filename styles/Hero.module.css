@@ -43,7 +43,6 @@ section#mainhero {
 .left button {
   width: 180px;
   color: var(--page-color);
-  height: 55px;
   background-color: var(--clr-primary);
   font-size: 1.2rem;
   font-weight: 600;
@@ -51,6 +50,7 @@ section#mainhero {
   border-radius: 7px;
   cursor: pointer;
   transition: all 200ms ease;
+  min-height: 50px;
 }
 .left button:hover {
   border: 2px solid var(--clr-primary);

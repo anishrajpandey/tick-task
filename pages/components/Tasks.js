@@ -4,7 +4,7 @@ import style from "../../styles/Tasks.module.css";
 import Script from "next/script";
 import axios from "axios";
 import { Router } from "next/router";
-export default function Tasks() {
+export default function Tasks({ specificQuote }) {
   let Inputref = useRef();
   let AddButton = useRef();
   let l = 0;
@@ -16,7 +16,7 @@ export default function Tasks() {
   const [Done, setDone] = useState([]);
   const [Clicked, setClicked] = useState(false);
   const [SpanColor, setSpanColor] = useState("black");
-  const [ProgressColor, setProgressColor] = useState("red");
+  // const [ProgressColor, setProgressColor] = useState("red");
 
   const [ShowMenu, setShowMenu] = useState(true);
   const [Quote, setQuote] = useState({
@@ -27,14 +27,15 @@ export default function Tasks() {
     let randomNum = Math.floor(Math.random() * 1643);
     return randomNum;
   };
-  const getData = async () => {
-    const res = await axios.get("https://type.fit/api/quotes ", {
-      headers: { Accept: "application/json" },
-      type: "GET",
-      crossDomain: true,
-    });
-    setQuote(res.data[getRandomIndex()]);
-  };
+
+  // const getData = async () => {
+  //   const res = await axios.get("https://type.fit/api/quotes ", {
+  //     headers: { Accept: "application/json" },
+  //     type: "GET",
+  //     crossDomain: true,
+  //   });
+  //   setQuote(res.data[getRandomIndex()]);
+  // };
   useEffect(() => {
     document.addEventListener("keypress", (e) => {
       if (e.key == "Enter" && Inputref.current?.value != "") {
@@ -308,12 +309,25 @@ export default function Tasks() {
               className={style.progressbar}
             />
             <div className={style.quoteContainer}>
-              <strong>{Quote.text}</strong>
-              <em>-{Quote.author}</em>
+              <strong>{specificQuote}</strong>
+              {/* <em>-{Quote.author}</em> */}
             </div>
           </div>
         </div>
       </main>
     </>
   );
+}
+export async function getStaticProps() {
+  const res = await axios.get("https://type.fit/api/quotes ", {
+    headers: { Accept: "application/json" },
+    type: "GET",
+    crossDomain: true,
+  });
+  let specificQuote = res.data[getRandomIndex()];
+  return {
+    props: {
+      specificQuote,
+    },
+  };
 }
