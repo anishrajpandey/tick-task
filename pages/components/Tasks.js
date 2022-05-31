@@ -1,10 +1,10 @@
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
-import NavBar from "./NavBar";
+
 import style from "../../styles/Tasks.module.css";
 import Script from "next/script";
 import axios from "axios";
 import { Router } from "next/router";
-export default function Tasks({ specificQuote }) {
+export default function Tasks() {
   let Inputref = useRef();
   let AddButton = useRef();
   let l = 0;
@@ -28,14 +28,14 @@ export default function Tasks({ specificQuote }) {
     return randomNum;
   };
 
-  // const getData = async () => {
-  //   const res = await axios.get("https://type.fit/api/quotes ", {
-  //     headers: { Accept: "application/json" },
-  //     type: "GET",
-  //     crossDomain: true,
-  //   });
-  //   setQuote(res.data[getRandomIndex()]);
-  // };
+  const getData = async () => {
+    const res = await axios.get("https://type.fit/api/quotes ", {
+      headers: { Accept: "application/json" },
+      type: "GET",
+      crossDomain: true,
+    });
+    setQuote(res.data[getRandomIndex()]);
+  };
   useEffect(() => {
     document.addEventListener("keypress", (e) => {
       if (e.key == "Enter" && Inputref.current?.value != "") {
@@ -265,6 +265,7 @@ export default function Tasks({ specificQuote }) {
               </button>
             )}
           </ol>
+
           <div
             className={style.Prg_btn}
             onClick={(e) => {
@@ -309,25 +310,11 @@ export default function Tasks({ specificQuote }) {
               className={style.progressbar}
             />
             <div className={style.quoteContainer}>
-              <strong>{specificQuote}</strong>
-              {/* <em>-{Quote.author}</em> */}
+              <strong>{Quote[getRandomIndex()]}</strong>
             </div>
           </div>
         </div>
       </main>
     </>
   );
-}
-export async function getStaticProps() {
-  const res = await axios.get("https://type.fit/api/quotes ", {
-    headers: { Accept: "application/json" },
-    type: "GET",
-    crossDomain: true,
-  });
-  let specificQuote = res.data[getRandomIndex()];
-  return {
-    props: {
-      specificQuote,
-    },
-  };
 }
