@@ -48,8 +48,12 @@ export default function Tasks() {
     setInterval(() => getData(), 15000);
   }, []);
   useLayoutEffect(() => {
-    setTaskList(localStorage.getItem("tasks").split(","));
-    setDone(localStorage.getItem("donetasks").split(","));
+    try {
+      setTaskList(localStorage.getItem("tasks").split(","));
+      setDone(localStorage.getItem("donetasks").split(","));
+    } catch {
+      console.error("Error");
+    }
 
     setTodolistLength(TaskList.length);
   }, []);
