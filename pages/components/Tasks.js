@@ -19,10 +19,11 @@ export default function Tasks() {
   // const [ProgressColor, setProgressColor] = useState("red");
 
   const [ShowMenu, setShowMenu] = useState(true);
-  const [Quote, setQuote] = useState({
-    text: "Things do not change, we change.",
-    author: "Henry Thoreau",
-  });
+  // const [Quote, setQuote] = useState({
+  //   text: "Things do not change, we change.",
+  //   author: "Henry Thoreau",
+  // });
+  const [Quote, setQuote] = useState("Things do not change, we change.");
   const getRandomIndex = () => {
     let randomNum = Math.floor(Math.random() * 1643);
     return randomNum;
@@ -34,7 +35,8 @@ export default function Tasks() {
       type: "GET",
       crossDomain: true,
     });
-    setQuote(res.data[getRandomIndex()]);
+    let responseData = await res.data;
+    setQuote(responseData[getRandomIndex()]);
   };
   useEffect(() => {
     document.addEventListener("keypress", (e) => {
@@ -197,7 +199,7 @@ export default function Tasks() {
             {TaskList.map((e) => {
               TaskList[0] === "" ? TaskList.shift() : null;
               return (
-                <li key={initial}>
+                <li key={e}>
                   <span
                     className={style.checkboxspan}
                     style={{ backgroundColor: SpanColor }}
@@ -244,14 +246,14 @@ export default function Tasks() {
           </ul>
         </div>
 
-        {/* ************************Done items list******************************* */}
+        {/* ************************Done items list**************😁😁***************** */}
         <div className={style.doneList}>
           <h1 className={style.aligncenter}>Done({Done.length})</h1>
           <ol>
             {Done.map((e, index) => {
               Done[0] === "" ? Done.shift() : null;
 
-              return <li key={initial}>{`${index + 1}.✅${e}`}</li>;
+              return <li key={e}>{`${index + 1}.✅${e}`}</li>;
             })}
             {Done.length !== 0 && (
               <button
@@ -308,9 +310,10 @@ export default function Tasks() {
               max="100"
               value={ProgressPercent || 0}
               className={style.progressbar}
+              readOnly
             />
             <div className={style.quoteContainer}>
-              <strong>{Quote[getRandomIndex()]}</strong>
+              <strong>{JSON.stringify(Quote.text)}</strong>
             </div>
           </div>
         </div>
