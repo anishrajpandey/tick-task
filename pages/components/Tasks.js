@@ -47,7 +47,7 @@ export default function Tasks() {
 
     setInterval(() => getData(), 15000);
   }, []);
-  useLayoutEffect(() => {
+  useEffect(() => {
     try {
       setTaskList(localStorage.getItem("tasks").split(","));
       setDone(localStorage.getItem("donetasks").split(","));
