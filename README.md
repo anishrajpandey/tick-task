@@ -1,2 +1,3 @@
 **note**
-simple todo app with local storage
+simple todo app with local storage<br/>
+[VISIT LIVE](https://todo-app-anish.vercel.app/)
